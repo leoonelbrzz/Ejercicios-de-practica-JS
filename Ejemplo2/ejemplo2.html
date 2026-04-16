@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interacción con JavaScript</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        button { margin: 5px; padding: 10px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <h1>Interacción con JavaScript</h1>
+    
+    <p id="resultado">Esperando interacción...</p>
+    <p>Clics realizados: <span id="contador">0</span></p>
+
+    <button id="btnColor">Cambiar Color</button>
+    <button id="btnTamano">Aumentar Tamaño</button>
+    <button id="btnFondo">Cambiar Fondo</button>
+    <button id="btnRestablecer">Restablecer</button>
+
+    <script>
+        const parrafo = document.getElementById("resultado");
+        const spanContador = document.getElementById("contador");
+        
+        let clics = 0;
+
+        function actualizarContador() {
+            clics++;
+            spanContador.textContent = clics;
+        }
+
+        document.getElementById("btnColor").addEventListener("click", function() {
+            actualizarContador();
+            parrafo.textContent = "¡Color cambiado!";
+            parrafo.style.color = "blue";
+            parrafo.style.fontWeight = "bold";
+        });
+
+        document.getElementById("btnTamano").addEventListener("click", function() {
+            actualizarContador();
+            parrafo.textContent = "¡Tamaño aumentado!";
+            parrafo.style.fontSize = "2rem";
+        });
+
+        document.getElementById("btnFondo").addEventListener("click", function() {
+            actualizarContador();
+            parrafo.textContent = "¡Fondo resaltado!";
+            parrafo.style.backgroundColor = "yellow";
+        });
+
+        document.getElementById("btnRestablecer").addEventListener("click", function() {
+            clics = 0;
+            spanContador.textContent = clics;
+            parrafo.textContent = "Esperando interacción...";
+            parrafo.style.color = "black";
+            parrafo.style.fontWeight = "normal";
+            parrafo.style.fontSize = "1rem";
+            parrafo.style.backgroundColor = "transparent";
+        });
+    </script>
+    
+</body>
+</html>

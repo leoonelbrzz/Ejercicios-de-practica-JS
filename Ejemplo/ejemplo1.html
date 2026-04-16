@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>"Mi Primer Programa JavaScript"</title>
+</head>
+<body>
+
+    <h1>Mi primer script de JavaScript</h1>
+
+    <script>
+        let nombre = "Pablo";
+        const edad = 19;
+        var ciudad = "Virreyes";
+        let esEstudiante = true;
+        let materias = ["Programación", "Sistemas Operativos", "Base de Datos", "Álgebra"];
+        
+        let perfilProfesor = {
+            nombre: "Oscar",
+            rol: "Profesor",
+            activo: true,
+            experiencia: 5
+        };
+
+        console.log("Boolean:", esEstudiante);
+        console.log("Array de materias:", materias);
+        console.log("Objeto de perfil:", perfilProfesor);
+
+        let equipo = [
+            { nombre: "Pablo", edad: 19, ciudad: "Virreyes", rol: "Estudiante" },
+            { nombre: "Milena", edad: 20, ciudad: "Virreyes", rol: "Estudiante" },
+            { nombre: "Agustin", edad: 21, ciudad: "Virreyes", rol: "Estudiante" },
+            { nombre: "Joaquín", edad: 22, ciudad: "Grand Bourg", rol: "Estudiante" }
+        ];
+
+        console.table(equipo);
+    </script>
+</body>
+</html>

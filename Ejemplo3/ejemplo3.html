@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Pro con Filtros</title>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Calculadora Pro</h1>
+        
+        <label for="fechaNacimiento">Seleccioná tu fecha de nacimiento:</label>
+        <input type="date" id="fechaNacimiento" style="width: 94%; padding: 10px; margin-top: 10px;">
+        
+        <button id="btnCalcular">Calcular Edad Exacta</button>
+        <button id="btnDiasCumple">¿Cuánto falta para mi cumple?</button>
+
+        <p id="resultado"></p>
+
+        <div id="historial">
+            <h3>Últimas consultas:</h3>
+            <ul id="listaHistorial"></ul>
+        </div>
+    </div>
+
+    <script>
+        const inputFecha = document.getElementById("fechaNacimiento");
+        const pResultado = document.getElementById("resultado");
+        const listaHistorial = document.getElementById("listaHistorial");
+        let historialConsultas = [];
+
+        function calcularEdadExacta(fecha) {
+            const hoy = new Date();
+            const cumple = new Date(fecha);
+            
+            if (cumple > hoy) {
+                pResultado.className = "error";
+                return "Error: No podés haber nacido en el futuro.";
+            }
+
+            let edad = hoy.getFullYear() - cumple.getFullYear();
+            const mes = hoy.getMonth() - cumple.getMonth();
+
+            if (mes < 0 || (mes === 0 && hoy.getDate() < cumple.getDate())) {
+                edad--;
+            }
+
+            if (edad > 120) {
+                pResultado.className = "error";
+                return `¿${edad} años? ¡Ya sos un fósil! Poné una fecha real (máximo 120 años).`;
+            }
+
+            pResultado.className = "";
+            agregarAlHistorial(edad);
+            return `Tenés exactamente ${edad} años.`;
+        }
+
+        function diasParaCumple(fecha) {
+            const hoy = new Date();
+            const nacimiento = new Date(fecha);
+            let proximoCumple = new Date(hoy.getFullYear(), nacimiento.getMonth(), nacimiento.getDate());
+
+            if (hoy > proximoCumple) {
+                proximoCumple.setFullYear(hoy.getFullYear() + 1);
+            }
+
+            const diferenciaMs = proximoCumple - hoy;
+            const diasFaltantes = Math.ceil(diferenciaMs / (1000 * 60 * 60 * 24));
+
+            return `Faltan ${diasFaltantes} días para tu próximo cumpleaños.`;
+        }
+
+        function agregarAlHistorial(edad) {
+            historialConsultas.unshift(edad);
+            if (historialConsultas.length > 5) historialConsultas.pop();
+            
+            listaHistorial.innerHTML = "";
+            historialConsultas.forEach(e => {
+                const li = document.createElement("li");
+                li.textContent = `Edad consultada: ${e} años`;
+                listaHistorial.appendChild(li);
+            });
+        }
+
+        document.getElementById("btnCalcular").addEventListener("click", function() {
+            if (!inputFecha.value) return pResultado.textContent = "Por favor, elegí una fecha.";
+            pResultado.textContent = calcularEdadExacta(inputFecha.value);
+        });
+
+        document.getElementById("btnDiasCumple").addEventListener("click", function() {
+            if (!inputFecha.value) return pResultado.textContent = "Primero elegí una fecha.";
+            
+            const pruebaEdad = new Date();
+            const cumple = new Date(inputFecha.value);
+            let edadTmp = pruebaEdad.getFullYear() - cumple.getFullYear();
+            
+            if (edadTmp > 120 || cumple > pruebaEdad) {
+                pResultado.className = "error";
+                pResultado.textContent = "Fecha inválida para calcular días.";
+            } else {
+                pResultado.className = "";
+                pResultado.textContent = diasParaCumple(inputFecha.value);
+            }
+        });
+    </script>
+</body>
+</html>
